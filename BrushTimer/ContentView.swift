@@ -2,23 +2,51 @@
 //  ContentView.swift
 //  BrushTimer
 //
-//  Created by Chris on 8/22/24.
-//
 
 import SwiftUI
 
 struct ContentView: View {
+    // Variables
+    @State private var showingSettings = false
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        VStack(spacing: 20) {
+            Text("Ready?")
+            Button("Start") {}
+                .buttonStyle(.borderedProminent)
         }
-        .padding()
+        .navigationTitle("BrushTimer")
+        .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $showingSettings) {
+            NavigationStack {
+                List {
+                    Text("Option")
+                }
+                .interactiveDismissDisabled()
+                .navigationTitle("Settings")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Done") {
+                            showingSettings.toggle()
+                        }
+                        .bold()
+                    }
+                }
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Settings", systemImage: "gear", action: {
+                    showingSettings.toggle()
+                })
+            }
+        }
     }
 }
 
 #Preview {
-    ContentView()
+    NavigationStack {
+        ContentView()
+    }
 }

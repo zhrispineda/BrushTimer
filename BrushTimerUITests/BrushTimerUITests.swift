@@ -2,8 +2,6 @@
 //  BrushTimerUITests.swift
 //  BrushTimerUITests
 //
-//  Created by Chris on 8/22/24.
-//
 
 import XCTest
 
