@@ -9,20 +9,20 @@ struct ContentView: View {
     // Variables
     @State private var showingSettings = false
     @State private var started = false
-    @State private var timeRemaining = 120
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State private var timeRemaining = 120.0
+    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 50) {
             if started {
                 ZStack {
                     Circle()
-                        .trim(from: 0, to: CGFloat(timeRemaining)/120.0)
+                        .trim(from: 0, to: timeRemaining/120.0)
                         .stroke(style: StrokeStyle(lineWidth: 16.0))
                         .foregroundColor(Color.blue)
                         .padding(50)
                         .rotationEffect(.degrees(270))
-                    Text("\(timeRemaining)")
+                    Text("\(Int(timeRemaining))")
                         .font(.system(size: 64))
                         .fontWeight(.bold)
                         .monospaced()
@@ -31,7 +31,7 @@ struct ContentView: View {
                         .onReceive(timer) { time in
                             if timeRemaining > 0 && started {
                                 withAnimation {
-                                    timeRemaining -= 1
+                                    timeRemaining -= 0.1
                                 }
                             }
                         }
@@ -46,6 +46,14 @@ struct ContentView: View {
                 }
             }
             .buttonStyle(.borderedProminent)
+            if timeRemaining < 120 && !started {
+                Button("Cancel") {
+                    withAnimation {
+                        timeRemaining = 120
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+            }
         }
         .navigationTitle("BrushTimer")
         .navigationBarTitleDisplayMode(.inline)
@@ -69,9 +77,9 @@ struct ContentView: View {
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Settings", systemImage: "gear", action: {
+                Button("Settings", systemImage: "gear") {
                     showingSettings.toggle()
-                })
+                }
             }
         }
     }
