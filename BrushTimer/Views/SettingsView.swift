@@ -8,8 +8,9 @@ import SwiftUI
 struct SettingsView: View {
     // Variables
     @State private var selected = "Default (Blue)"
-    let colors = ["Default (Blue)", "Yellow", "Green", "Pink", "Purple"]
+    let colors = ["Default (Blue)", "Green", "Orange", "Pink", "Purple", "Red", "Yellow"]
     @State private var duration = 120.0
+    @Binding var selectedColor: Color
     
     var body: some View {
         NavigationStack {
@@ -22,19 +23,24 @@ struct SettingsView: View {
                     }
                     .pickerStyle(.inline)
                     .labelsHidden()
-                }
-                
-                Section {
-                    Slider(value: $duration,
-                           in: 60.0...180.0,
-                           step: 10.0,
-                           label: { Text("Duration")  }
-                    )
-                    Text("\(Int(duration)) seconds")
-                } header: {
-                    Text("Timer Duration")
-                } footer: {
-                    Text("It is strongly recommended to brush for 2 minutes or 120 seconds.")
+                    .onChange(of: selected) {
+                        switch selected {
+                        case "Green":
+                            selectedColor = Color.green
+                        case "Orange":
+                            selectedColor = Color.orange
+                        case "Pink":
+                            selectedColor = Color.pink
+                        case "Purple":
+                            selectedColor = Color.purple
+                        case "Red":
+                            selectedColor = Color.red
+                        case "Yellow":
+                            selectedColor = Color.yellow
+                        default:
+                            selectedColor = Color.blue
+                        }
+                    }
                 }
             }
             .navigationTitle("Settings")
@@ -44,5 +50,5 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView()
+    SettingsView(selectedColor: .constant(Color.blue))
 }

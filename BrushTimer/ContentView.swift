@@ -7,30 +7,37 @@ import SwiftUI
 
 struct ContentView: View {
     // Variables
-    @State private var started = false
+    @State private var running = false
+    @State private var timerDuration = 120.0
     @State private var timeRemaining = 120.0
+    @State private var selectedColor = Color.blue
     let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         TabView {
             Tab("Timer", systemImage: "clock") {
                 VStack(spacing: 50) {
-                    if started {
+                    if running && timeRemaining > 0 {
                         ZStack {
                             Circle()
-                                .trim(from: 0, to: timeRemaining/120.0)
+                                .trim(from: 0, to: timerDuration)
                                 .stroke(style: StrokeStyle(lineWidth: 16.0))
-                                .foregroundColor(Color.blue)
+                                .foregroundColor(Color.gray.opacity(0.5))
+                                .padding(50)
+                            Circle()
+                                .trim(from: 0, to: timeRemaining/timerDuration)
+                                .stroke(style: StrokeStyle(lineWidth: 16.0))
+                                .foregroundColor(selectedColor)
                                 .padding(50)
                                 .rotationEffect(.degrees(270))
                             Text("\(Int(timeRemaining))")
-                                .font(.system(size: 64))
+                                .font(.system(size: 72))
                                 .fontWeight(.bold)
                                 .monospaced()
                                 .contentTransition(.numericText(countsDown: true))
                                 .animation(.default, value: timeRemaining)
                                 .onReceive(timer) { time in
-                                    if timeRemaining > 0 && started {
+                                    if timeRemaining > 0 && running {
                                         withAnimation {
                                             timeRemaining -= 0.1
                                         }
@@ -38,19 +45,36 @@ struct ContentView: View {
                                 }
                         }
                     }
-                    if !started {
-                        Text(timeRemaining < 120 ? "Continue?" : "Ready?")
+                    if !running {
+                        Text(timeRemaining < timerDuration ? "Continue?" : "Ready?")
+                            .font(.system(size: 42))
+                            .fontWeight(.bold)
                     }
-                    Button(started ? "Pause" : timeRemaining < 120 ? "Resume" : "Start") {
-                        withAnimation {
-                            started.toggle()
+                    if timeRemaining > 0 {
+                        Button(running ? "Pause" : timeRemaining < timerDuration ? "Resume" : "Start") {
+                            withAnimation {
+                                running.toggle()
+                            }
                         }
+                        .buttonStyle(.borderedProminent)
+                        .font(.title2)
+                        .bold()
+                    } else {
+                        Text("Well done.")
+                            .font(.system(size: 42))
+                            .fontWeight(.bold)
+                        Button("Dismiss") {
+                            withAnimation {
+                                timeRemaining = timerDuration
+                                running = false
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
                     }
-                    .buttonStyle(.borderedProminent)
-                    if timeRemaining < 120 && !started {
+                    if timeRemaining < timerDuration && !running {
                         Button("Cancel") {
                             withAnimation {
-                                timeRemaining = 120
+                                timeRemaining = timerDuration
                             }
                         }
                         .buttonStyle(.borderedProminent)
@@ -61,7 +85,7 @@ struct ContentView: View {
             }
             
             Tab("Settings", systemImage: "gear") {
-                SettingsView()
+                SettingsView(selectedColor: $selectedColor)
             }
         }
     }
