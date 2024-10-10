@@ -74,6 +74,11 @@ struct ContentView: View {
                             withAnimation {
                                 timeRemaining = timerDuration
                                 running = false
+                                
+                                let now = Date()
+                                let startDate = now.addingTimeInterval(-2 * 60) // 2 minutes
+                                let endDate = now
+                                healthKitManager.saveToothbrushingData(startDate: startDate, endDate: endDate)
                             }
                         }
                         .buttonStyle(.borderedProminent)

@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		83424DFC2CB86EDB00900C16 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 83424DFB2CB86ED600900C16 /* README.md */; };
+		83424DFF2CB86F6200900C16 /* Screenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = 83424DFE2CB86F6200900C16 /* Screenshot.png */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		83E1E8FE2C77883600146775 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +29,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		83424DFB2CB86ED600900C16 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		83424DFE2CB86F6200900C16 /* Screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Screenshot.png; sourceTree = "<group>"; };
 		83E1E8ED2C77883500146775 /* BrushTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrushTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83E1E8FD2C77883600146775 /* BrushTimerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrushTimerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		83E1E9072C77883600146775 /* BrushTimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrushTimerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,9 +92,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		83424DFD2CB86EF200900C16 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				83424DFE2CB86F6200900C16 /* Screenshot.png */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		83E1E8E42C77883500146775 = {
 			isa = PBXGroup;
 			children = (
+				83424DFD2CB86EF200900C16 /* Assets */,
+				83424DFB2CB86ED600900C16 /* README.md */,
 				83E1E8EF2C77883500146775 /* BrushTimer */,
 				83E1E9002C77883600146775 /* BrushTimerTests */,
 				83E1E90A2C77883600146775 /* BrushTimerUITests */,
@@ -225,6 +242,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83424DFC2CB86EDB00900C16 /* README.md in Resources */,
+				83424DFF2CB86F6200900C16 /* Screenshot.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

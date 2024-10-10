@@ -29,4 +29,30 @@ class HealthKitManager: ObservableObject {
             }
         }
     }
+    
+    func saveToothbrushingData(startDate: Date, endDate: Date) {
+        guard HKHealthStore.isHealthDataAvailable() else {
+            print("Health data not available")
+            return
+        }
+        
+        let toothbrushingType = HKObjectType.categoryType(forIdentifier: .toothbrushingEvent)!
+        
+        let toothbrushingSample = HKCategorySample(
+            type: toothbrushingType,
+            value: 0,
+            start: startDate,
+            end: endDate
+        )
+        
+        healthStore.save(toothbrushingSample) { success, error in
+            if let error = error {
+                print("Error saving toothbrushing data: \(error.localizedDescription)")
+            } else if success {
+                print("Successfully saved toothbrushing data.")
+            } else {
+                print("Failed to save toothbrushing data.")
+            }
+        }
+    }
 }
