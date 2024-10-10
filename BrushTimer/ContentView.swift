@@ -4,14 +4,20 @@
 //
 
 import SwiftUI
+import HealthKit
 
 struct ContentView: View {
     // Variables
+    var healthKitManager: HealthKitManager = HealthKitManager()
     @State private var running = false
     @State private var timerDuration = 120.0
     @State private var timeRemaining = 120.0
     @State private var selectedColor = Color.blue
     let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+    
+    init() {
+        healthKitManager.requestHealthData()
+    }
     
     var body: some View {
         TabView {
@@ -30,6 +36,7 @@ struct ContentView: View {
                                 .foregroundColor(selectedColor)
                                 .padding(50)
                                 .rotationEffect(.degrees(270))
+                                .shadow(color: selectedColor, radius: 10.0)
                             Text("\(Int(timeRemaining))")
                                 .font(.system(size: 72))
                                 .fontWeight(.bold)
