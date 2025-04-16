@@ -2,8 +2,6 @@
 //  BrushTimerTests.swift
 //  BrushTimerTests
 //
-//  Created by Chris on 8/22/24.
-//
 
 import Testing
 @testable import BrushTimer

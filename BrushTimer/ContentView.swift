@@ -25,18 +25,23 @@ struct ContentView: View {
                 VStack(spacing: 50) {
                     if running && timeRemaining > 0 {
                         ZStack {
+                            // Underlying circle stroke
                             Circle()
                                 .trim(from: 0, to: timerDuration)
-                                .stroke(style: StrokeStyle(lineWidth: 16.0))
-                                .foregroundColor(Color.gray.opacity(0.5))
+                                .stroke(style: StrokeStyle(lineWidth: 20.0))
+                                .foregroundStyle(.background)
                                 .padding(50)
+                            
+                            // Animating circle stroke
                             Circle()
                                 .trim(from: 0, to: timeRemaining/timerDuration)
-                                .stroke(style: StrokeStyle(lineWidth: 16.0))
-                                .foregroundColor(selectedColor)
+                                .stroke(style: StrokeStyle(lineWidth: 20.0, dash: [3.5]))
+                                .foregroundStyle(selectedColor)
                                 .padding(50)
                                 .rotationEffect(.degrees(270))
-                                .shadow(color: selectedColor, radius: 10.0)
+                                .shadow(color: selectedColor, radius: 7.5)
+                            
+                            // Remaining time text
                             Text("\(Int(timeRemaining))")
                                 .font(.system(size: 72))
                                 .fontWeight(.bold)
@@ -51,12 +56,22 @@ struct ContentView: View {
                                     }
                                 }
                         }
+                        .background {
+                            RoundedRectangle(cornerRadius: 15.0)
+                                .foregroundStyle(Color(UIColor.tertiarySystemGroupedBackground))
+                                .frame(maxHeight: 350)
+                                .padding()
+                        }
                     }
+                    
+                    // Start/resume text
                     if !running {
                         Text(timeRemaining < timerDuration ? "Continue?" : "Ready?")
                             .font(.system(size: 42))
                             .fontWeight(.bold)
                     }
+                    
+                    // Primary button (Start, Pause, Resume, Dismiss)
                     if timeRemaining > 0 {
                         Button(running ? "Pause" : timeRemaining < timerDuration ? "Resume" : "Start") {
                             withAnimation {
@@ -83,6 +98,8 @@ struct ContentView: View {
                         }
                         .buttonStyle(.borderedProminent)
                     }
+                    
+                    // Cancel button
                     if timeRemaining < timerDuration && !running {
                         Button("Cancel") {
                             withAnimation {
@@ -92,8 +109,6 @@ struct ContentView: View {
                         .buttonStyle(.borderedProminent)
                     }
                 }
-                .navigationTitle("BrushTimer")
-                .navigationBarTitleDisplayMode(.inline)
             }
             
             Tab("Settings", systemImage: "gear") {

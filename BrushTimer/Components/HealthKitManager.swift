@@ -6,7 +6,7 @@
 import HealthKit
 import os
 
-class HealthKitManager: ObservableObject {
+@Observable class HealthKitManager {
     var healthStore = HKHealthStore()
     
     func requestHealthData() {

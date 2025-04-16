@@ -7,10 +7,10 @@ import SwiftUI
 
 struct SettingsView: View {
     // Variables
-    @State private var selected = "Default (Blue)"
-    let colors = ["Default (Blue)", "Green", "Orange", "Pink", "Purple", "Red", "Yellow"]
-    @State private var duration = 120.0
     @Binding var selectedColor: Color
+    @State private var selected = "Default (Blue)"
+    @State private var duration = 120.0
+    private let colors = ["Default (Blue)", "Green", "Orange", "Pink", "Purple", "Red", "Yellow"]
     
     var body: some View {
         NavigationStack {
@@ -43,7 +43,7 @@ struct SettingsView: View {
                     }
                 }
             }
-            .navigationTitle("Settings")
+            .navigationTitle("BrushTimer Settings")
             .navigationBarTitleDisplayMode(.inline)
         }
     }
